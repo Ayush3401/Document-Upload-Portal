@@ -8,3 +8,9 @@ class User_Create_form(forms.ModelForm):
         model = User
         fields = ['username','first_name', 'last_name',
                   'email', 'roll_number',  'password', ]
+
+
+class UploadFileForm(forms.ModelForm):
+    class Meta:
+        model = File
+        fields = ['name', 'file' ]

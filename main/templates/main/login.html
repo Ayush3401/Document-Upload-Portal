@@ -2,12 +2,20 @@
 
 {% extends 'base.html' %} {% block head %}<title>Signup</title> {% endblock head%} {% block body %}
 {% load crispy_forms_tags %}
+<div style="display:flex;width: 100%;">
+    
+    <div style="margin:auto;padding :2%;padding-top:12%;padding-right: 10%;">
+     
+
 <form method="post" class="form">
   {% csrf_token %} {{ form|crispy}}
+  <br>
   <input class="btn btn-primary" type="submit" value="Submit" />
 </form>
-<div style="display: flex;flex-direction: right;"><div style="margin-right:1%">Already have an account then <a href={% url 'login' %}>Login </a>here! </div> </div>
+<div style="display: flex;flex-direction: right;"><div style="margin-right:1%">Don't have an account yet then <a href={% url 'signup' %}>Sign Up </a>here! </div> </div>
+<a href={% url 'password_reset_request' %}>Forgot Password?</a>
 
+</div></div>
 {% endblock body %}
 {% block script %}
 <script>
