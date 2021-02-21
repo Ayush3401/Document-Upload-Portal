@@ -1,0 +1,13 @@
+<!-- @format -->
+
+{% extends 'base.html' %} {% block head %}<title>Signup</title> {% endblock head%} {% block body %}
+<form method="post" class="form">
+  {% csrf_token %} {{ form.as_p }}
+  <input class="btn btn-primary" type="submit" value="Submit" />
+</form>
+{% endblock body %}
+{% block script %}
+<script>
+    $('form').addclass('')
+</script>
+{% endblock script %}
