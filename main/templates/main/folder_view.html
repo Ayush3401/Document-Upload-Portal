@@ -2,9 +2,14 @@
 
 {% extends 'base.html' %} {% block head %}{% endblock head%} {% block body %}
 <a href={% url 'logout' %}>logout</a>
+<form method="post">
+{% csrf_token %}
 {% for folder in folders %}
-<a href='/{{ folder.id}}/files' }}>{{folder.name}}</p>
+<input type="checkbox" value={{folder.name}} name={{folder.id}} ><a href='/{{ folder.id}}/files' >{{folder.name}}</a></p>
 {% endfor %}
+<input class="btn btn-primary" type="submit" value="Delete" name="delete"/><br>
+<input type="text" name="sharename" /> <input class="btn btn-primary" type="submit" value="Share" name="share"/>
+</form>
 <a href='/home/addFolder/'>add Folder</a>
 {% endblock body %}
 {% block script %}

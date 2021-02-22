@@ -16,7 +16,7 @@ urlpatterns = [
     path('reset/done/', auth.PasswordResetCompleteView.as_view(
         template_name='password/password_reset_complete.html'), name='password_reset_complete'),
 
-    path('<int:folder_id>/upload/', views.uploadFile, name='upload_file'),
+    path('home/<int:folder_id>/upload/', views.uploadFile, name='upload_file'),
     path('home/', views.folder_view, name='home'),
     path('home/addFolder/', views.create_folder, name='addFolder'),
     path('<int:folder_id>/files/', views.file_view, name='view_files'),

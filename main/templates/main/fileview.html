@@ -5,11 +5,12 @@
 <form method="post">
     {% csrf_token %}
     {% for file in files %}
-    <input type="checkbox" value={{file.name}} name={{file.id}}> {{file.name}}<br>
+    <input type="checkbox" value={{file.name}} name={{file.id}}><a href={{file.file.url}} download>{{file.name}}</a><br>
     {% endfor %}
-    <input class="btn btn-primary" type="submit" value="Delete" />
+    <input class="btn btn-primary" type="submit" value="Delete" name="delete"/><br>
+    <input type="text" name="sharename" / > <input class="btn btn-primary" type="submit" value="Share" name="share"/>
 </form>
-<a href="/{{folder.id}}/upload">upload file</a>
+<a href="/home/{{folder.id}}/upload">upload file</a>
 {% endblock body %}
 {% block script %}
 <script>

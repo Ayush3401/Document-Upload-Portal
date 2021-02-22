@@ -1,4 +1,5 @@
 from django.contrib.auth.decorators import login_required
+from django.http.response import HttpResponse
 from django.shortcuts import redirect, render
 from django.contrib.auth.forms import UserCreationForm
 from .forms import *
@@ -8,7 +9,7 @@ from .models import *
 
 
 def signup(request):
-    form = UserCreationForm()
+    form = UserCreationForm(request.POST or None)
     if form.is_valid():
         form.save()
         user=User.objects.get(username=request.POST.get('username'))
@@ -43,6 +44,28 @@ def uploadFile(request, folder_id):
 def folder_view(request):
     user_folder_rel = User_folder_relation.objects.get(user = request.user)
     folders = user_folder_rel.folders.all()
+    if request.method == 'POST':
+        if 'delete' in request.POST:
+            for folder in folders:
+                if(str(folder.id) in request.POST):
+                    user_folder_rel.folders.remove(folder)
+                    print('here')
+                    folder.delete()
+            return redirect('home')
+        if 'share' in request.POST:
+            for folder in folders:
+                if(str(folder.id) in request.POST):
+                    user = User.objects.get(
+                        username=request.POST.get('sharename'))
+                    if user :
+                        
+                        ufr = User_folder_relation.objects.get(user=user)
+                        if folder in ufr.folders.all() :
+                            return HttpResponse('folder already exist')
+                        else :
+                            ufr.folders.add(folder)
+                    else:
+                        return HttpResponse('User does not exist')
     return render(request, 'main/folder_view.html', {'folders' : folders})
 
 
@@ -53,10 +76,28 @@ def file_view(request, folder_id):
     files = folder.files.all()
 
     if request.method == 'POST':
-        for file in files:
-            if(str(file.id) in request.POST):
-                folder.files.remove(file)
-                file.delete()
+        if 'delete' in request.POST:
+            for file in files:
+                if(str(file.id) in request.POST):
+                    folder.files.remove(file)
+                    file.delete()
+            return redirect('view_files', folder_id=folder_id)
+        if 'share' in request.POST:
+            for file in files:
+                if(str(file.id) in request.POST):
+                    try:
+                        user = User.objects.get(username = request.POST.get('sharename'))
+                        ufr = User_folder_relation.objects.get(user = user)
+                        folder_name = 'Shared-' + str(request.user.username)
+                        try:                            
+                            folder = ufr.folders.get(name = folder_name)
+                            folder.files.add(file)
+                        except:
+                            folder = Folder.objects.create(name=folder_name)
+                            ufr.folders.add(folder)
+                            folder.files.add(file)
+                    except:
+                        return HttpResponse('User does not exist')
         link = '/'+str(folder_id)+'/files/'
         return redirect(link)
     
