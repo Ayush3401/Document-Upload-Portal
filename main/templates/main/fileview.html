@@ -1,8 +1,15 @@
 <!-- @format -->
 
 {% extends 'base.html' %} {% block head %}{% endblock head%} {% block body %}
-
-{% for file in  %}
+<a href={% url 'logout' %}>logout</a>
+<form method="post">
+    {% csrf_token %}
+    {% for file in files %}
+    <input type="checkbox" value={{file.name}} name={{file.id}}> {{file.name}}<br>
+    {% endfor %}
+    <input class="btn btn-primary" type="submit" value="Delete" />
+</form>
+<a href="/{{folder.id}}/upload">upload file</a>
 {% endblock body %}
 {% block script %}
 <script>

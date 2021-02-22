@@ -1,0 +1,14 @@
+<!-- @format -->
+
+{% extends 'base.html' %} {% block head %}{% endblock head%} {% block body %}
+<a href={% url 'logout' %}>logout</a>
+{% for folder in folders %}
+<a href='/{{ folder.id}}/files' }}>{{folder.name}}</p>
+{% endfor %}
+<a href='/home/addFolder/'>add Folder</a>
+{% endblock body %}
+{% block script %}
+<script>
+    $('form').addclass('')
+</script>
+{% endblock script %}

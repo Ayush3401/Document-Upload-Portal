@@ -1,16 +1,15 @@
 from django import forms
-from django.contrib.auth.models import AbstractUser
 from .models import *
-
-
-class User_Create_form(forms.ModelForm):
-    class Meta:
-        model = User
-        fields = ['username','first_name', 'last_name',
-                  'email', 'roll_number',  'password', ]
+from django.contrib.auth.models import User
 
 
 class UploadFileForm(forms.ModelForm):
     class Meta:
         model = File
-        fields = ['name', 'file' ]
+        fields = ['name', 'file']
+
+
+class folderCreationForm(forms.ModelForm):
+    class Meta:
+        model = Folder
+        fields = ['name']

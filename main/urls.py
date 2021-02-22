@@ -2,6 +2,8 @@
 from django.urls import path
 from main import views
 from django.contrib.auth import views as auth
+from django.conf.urls.static import static
+from django.conf import settings
 
 urlpatterns = [
     
@@ -14,7 +16,8 @@ urlpatterns = [
     path('reset/done/', auth.PasswordResetCompleteView.as_view(
         template_name='password/password_reset_complete.html'), name='password_reset_complete'),
 
-    path('upload/', views.uploadFile, name='upload_file'),
-    path('fileview/', views.fileview, name='view_file'),
-
-]
+    path('<int:folder_id>/upload/', views.uploadFile, name='upload_file'),
+    path('home/', views.folder_view, name='home'),
+    path('home/addFolder/', views.create_folder, name='addFolder'),
+    path('<int:folder_id>/files/', views.file_view, name='view_files'),
+]+static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

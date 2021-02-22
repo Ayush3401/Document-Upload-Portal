@@ -1,12 +1,13 @@
 <!-- @format -->
 
-{% extends 'base.html' %} {% block head %}<title>Upload File</title> {% endblock head%} {% block body %}
-{% load crispy_forms_tags %}
+{% extends 'base.html' %} {% block head %}<title>Signup</title> {% endblock head%} {% block body %}
 <a href={% url 'logout' %}>logout</a>
-<form method="post" class="form" enctype="multipart/form-data">
+{% load crispy_forms_tags %}
+<form method="post" class="form">
   {% csrf_token %} {{ form|crispy}}
   <input class="btn btn-primary" type="submit" value="Submit" />
 </form>
+
 {% endblock body %}
 {% block script %}
 <script>
