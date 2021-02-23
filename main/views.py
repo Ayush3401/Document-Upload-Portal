@@ -2,15 +2,18 @@ from django.contrib.auth.decorators import login_required
 from django.http.response import HttpResponse
 from django.shortcuts import redirect, render
 from django.http import JsonResponse
-from django.contrib.auth.forms import UserCreationForm
 from .forms import *
 from .models import *
 
 # Create your views here.
 
 
+def firstpage(request):
+    return render(request, "main/firstpage.html")
+
+
 def signup(request):
-    form = UserCreationForm(request.POST or None)
+    form = usercreationform(request.POST or None)
     if form.is_valid():
         form.save()
         user = User.objects.get(username=request.POST.get('username'))
@@ -82,7 +85,7 @@ def file_view(request, folder_id):
 
     folder = Folder.objects.get(pk=folder_id)
     files = folder.files.all()
-    ufr = User_folder_relation.objects.get(user = request.user)
+    ufr = User_folder_relation.objects.get(user=request.user)
     if request.method == 'POST':
         if 'delete' in request.POST:
             for file in files:
@@ -111,8 +114,9 @@ def file_view(request, folder_id):
             for file in files:
                 if(str(file.id) in request.POST):
                     try:
-                        fldr = ufr.folders.get(name=request.POST.get('movename'))
-                        folder.files.remove(file)   
+                        fldr = ufr.folders.get(
+                            name=request.POST.get('movename'))
+                        folder.files.remove(file)
                         fldr.files.add(file)
                     except:
                         return HttpResponse('folder does not exist')

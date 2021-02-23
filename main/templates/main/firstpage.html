@@ -1,0 +1,12 @@
+<!-- @format -->
+
+{% extends 'base.html' %} {% block head %}{% endblock head%} {% block body %}
+
+<a href={% url 'login' %}>Login</a><br>
+<a href={% url 'signup' %}>Sign Up</a>
+{% endblock body %}
+{% block script %}
+<script>
+    $('form').addclass('')
+</script>
+{% endblock script %}
