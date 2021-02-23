@@ -20,4 +20,7 @@ urlpatterns = [
     path('home/', views.folder_view, name='home'),
     path('home/addFolder/', views.create_folder, name='addFolder'),
     path('<int:folder_id>/files/', views.file_view, name='view_files'),
+    path('<int:folder_id>/files/newname/',
+         views.renamefolder, name='renamefolder'),
+    path('files/<int:file_id>/newname/', views.renamefile, name='renamefile'),
 ]+static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

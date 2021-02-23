@@ -1,14 +1,39 @@
 <!-- @format -->
 
-{% extends 'base.html' %} {% block head %}{% endblock head%} {% block body %}
+{% extends 'base.html' %} 
+{% block head %}
+<meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+  <link rel="stylesheet" href="/resources/demos/style.css">
+  <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+  <script>
+  $( function() {
+    $( "#sharename" ).autocomplete({
+      source: '{% url 'view_files' pk %}'
+    });
+  } );
+  </script>
+
+{% endblock head%} 
+{% block body %}
 <a href={% url 'logout' %}>logout</a>
+{{request.user.username}}
 <form method="post">
     {% csrf_token %}
     {% for file in files %}
     <input type="checkbox" value={{file.name}} name={{file.id}}><a href={{file.file.url}} download>{{file.name}}</a><br>
+    <a href={% url 'renamefile' file.id %}>Rename</a>
+
     {% endfor %}
     <input class="btn btn-primary" type="submit" value="Delete" name="delete"/><br>
-    <input type="text" name="sharename" / > <input class="btn btn-primary" type="submit" value="Share" name="share"/>
+    <div class="ui-widget">
+    <input type="text" name="sharename" id="sharename" / >
+ </div>
+ <input class="btn btn-primary" type="submit" value="Share" name="share"/>
+ <input type="text" name="movename"/ >
+ <input class="btn btn-primary" type="submit" value="Move" name="move">
 </form>
 <a href="/home/{{folder.id}}/upload">upload file</a>
 {% endblock body %}

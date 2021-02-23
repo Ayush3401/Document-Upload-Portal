@@ -1,0 +1,18 @@
+<!-- @format -->
+
+{% extends 'base.html' %} {% block head %}<title>Signup</title> {% endblock head%} {% block body %}
+<a href={% url 'logout' %}>logout</a>
+{% load crispy_forms_tags %}
+<form method="post" class="form">
+  {% csrf_token %} 
+Newname: 
+  <input name="newname" id="newname">
+  <input class="btn btn-primary" type="submit" value="Submit" />
+</form>
+
+{% endblock body %}
+{% block script %}
+<script>
+    $('form').addclass('')
+</script>
+{% endblock script %}

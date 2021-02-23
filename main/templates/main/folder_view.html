@@ -1,14 +1,37 @@
 <!-- @format -->
 
-{% extends 'base.html' %} {% block head %}{% endblock head%} {% block body %}
+{% extends 'base.html' %} {% block head %}
+<meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+  <link rel="stylesheet" href="/resources/demos/style.css">
+  <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+  <script>
+  $( function() {
+    $( "#sharename" ).autocomplete({
+      source: '{% url 'home' %}'
+    });
+  } );
+  </script>
+
+{% endblock head%} {% block body %}
 <a href={% url 'logout' %}>logout</a>
 <form method="post">
 {% csrf_token %}
 {% for folder in folders %}
-<input type="checkbox" value={{folder.name}} name={{folder.id}} ><a href='/{{ folder.id}}/files' >{{folder.name}}</a></p>
+<input type="checkbox" value={{folder.name}} name={{folder.id}} ><a href={% url 'view_files' folder.id %} >{{folder.name}}</a>
+<a href={% url 'renamefolder' folder.id %}>Rename</a>
+</p>
+    <br>
 {% endfor %}
 <input class="btn btn-primary" type="submit" value="Delete" name="delete"/><br>
-<input type="text" name="sharename" /> <input class="btn btn-primary" type="submit" value="Share" name="share"/>
+<div class="ui-widget">
+
+ 
+<input type="text" name="sharename" id="sharename" /> 
+</div>
+<input class="btn btn-primary" type="submit" value="Share" name="share"/>
 </form>
 <a href='/home/addFolder/'>add Folder</a>
 {% endblock body %}
