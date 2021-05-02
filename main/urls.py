@@ -18,7 +18,8 @@ urlpatterns = [
 
     path('home/<int:folder_id>/upload/', views.uploadFile, name='upload_file'),
     path('home/', views.folder_view, name='home'),
-    path('home/addFolder/', views.create_folder, name='addFolder'),
+    path('home/addFolder/<int:folder_id>/',
+         views.create_folder, name='addFolder'),
     path('<int:folder_id>/files/', views.file_view, name='view_files'),
     path('<int:folder_id>/files/newname/',
          views.renamefolder, name='renamefolder'),

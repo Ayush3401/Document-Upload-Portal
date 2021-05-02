@@ -23,9 +23,12 @@
 <form method="post">
     {% csrf_token %}
     {% for file in files %}
-    <input type="checkbox" value={{file.name}} name={{file.id}}><a href={{file.file.url}} download>{{file.name}}</a><br>
+    <input type="checkbox" value={{file.id}} name={{file.id}}><a href={{file.file.url}} download>{{file.name}}</a><br>
     <a href={% url 'renamefile' file.id %}>Rename</a>
 
+    {% endfor %}
+    {% for child_folder in folders %}
+    <input type="checkbox" value={{child_folder.id}} name={{child_folder.id}} ><a href={% url 'view_files' child_folder.id %} >{{child_folder.name}}</a>
     {% endfor %}
     <input class="btn btn-primary" type="submit" value="Delete" name="delete"/><br>
     <div class="ui-widget">
@@ -36,9 +39,11 @@
  <input class="btn btn-primary" type="submit" value="Move" name="move">
 </form>
 <a href="/home/{{folder.id}}/upload">upload file</a>
+<a href="/home/addFolder/{{folder.id}}/">add Folder</a>
 {% endblock body %}
 {% block script %}
 <script>
     $('form').addclass('')
 </script>
 {% endblock script %}
+o
