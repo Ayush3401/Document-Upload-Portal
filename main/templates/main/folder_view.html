@@ -9,34 +9,95 @@
   <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
   <script>
   $( function() {
-    $( "#sharename" ).autocomplete({
+    $( "#sharename_nav" ).autocomplete({
       source: '{% url 'home' %}'
     });
   } );
   </script>
 
 {% endblock head%} {% block body %}
-<a href={% url 'logout' %}>logout</a>
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <div class="container-fluid">
+    <a class="navbar-brand" >DUP</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+      aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="localhost:8000/home">Home</a>
+        </li>
+        <li class="nav-item"> 
+        <a href='/home/addFolder/0' class="nav-link active" style="text-decoration:none; color:white;">Add Folder</a>
+        </li>         
+        </li>
+        <li class="nav-item">
+          <a class="nav-link active" href="#" onClick="document.getElementById('delete').click()" >Delete</a>
+        </li>
+        
+        <li class="nav-item">
+          <a class="nav-link active" href="#" id="rename_nav"  onClick="rename_function()" >Rename</a>
+        </li>
+       </ul>
+      <form class="d-flex">
+        <a class=" nav-item nav-link active" href="#"  onClick="document.getElementById('share').click()" style="text-decoration:none;color:white;">Share</a>
+      <input class="form-control" id="sharename_nav"   placeholder="Share" onChange="document.getElementById('sharename').value = this.value">
+
+        <a class="nav-link active" href="#" style="text-decoration:none; color:white;">{{request.user.username}}</a>
+      
+        <button class="btn "><a href={% url 'logout' %} style="text-decoration:none; color:white;">Logout</a></button>
+      </form>
+    </div>
+  </div>
+</nav>
+
 <form method="post">
 {% csrf_token %}
+<p style="margin-left:1%;font-weight: bold;">To select one or more items please click on the checkbox.</p>
+<div style="display:grid; grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;">
 {% for folder in folders %}
-<input type="checkbox" value={{folder.name}} name={{folder.id}} ><a href={% url 'view_files' folder.id %} >{{folder.name}}</a>
-<a href={% url 'renamefolder' folder.id %}>Rename</a>
-</p>
-    <br>
+<div style="display:flex;flex-direction: column;margin:10%;overflow:auto;">
+
+<a href={% url 'view_files' folder.id %} style="text-decoration: none;">
+<img src="https://upload.wikimedia.org/wikipedia/commons/5/59/OneDrive_Folder_Icon.svg" style="width:5rem; height:5rem;" ><a href={% url 'view_files' folder.id %} ></a></img>
+</a>
+
+<div style="display:flex;flex-direction: row;margin:5%;">
+<input type="checkbox"  name={{folder.id}} style="margin-top:5%;margin-right:5%; margin-left:0%;" value = {{folder.id}} />
+<a href={% url 'view_files' folder.id %} style="text-decoration: none;">
+{{folder.name}}
+</a>
+</div>
+</div>
 {% endfor %}
-<input class="btn btn-primary" type="submit" value="Delete" name="delete"/><br>
-<div class="ui-widget">
+</div>
+
+<div style="display:flex;flex-direction: row;">
+
+<input class="btn btn-primary" type="submit" value="Delete" name="delete"  id="delete" style="display:none;"/><br>
+
+<input type="text" name="sharename" id="sharename" style="display:none;"/> 
+<input class="btn btn-primary" type="submit" value="Share" name="share" id="share" style="display:none;" />
+</form>
+</div>
+<script> setInterval(()=>{var val = document.querySelectorAll('input[type="checkbox"]:checked').length;
+if(val!=1){
+  document.getElementById("rename_nav").style.display = "none";
+  
+}
+else{
+  document.getElementById('rename_nav').style.display = '';
+}
+}, 100);
+  function rename_function(){
+    var id = document.querySelectorAll('input[type="checkbox"]:checked')[0].value;
+    var link = 'http://localhost:8000/' + id + '/files/newname/';
+    window.location.href = link;
+  }
+</script>
+{% endblock body %}
+
 
  
-<input type="text" name="sharename" id="sharename" /> 
-</div>
-<input class="btn btn-primary" type="submit" value="Share" name="share"/>
-</form>
-<a href='/home/addFolder/0'>add Folder</a>
-{% endblock body %}
-{% block script %}
-<script>
-    $('form').addclass('')
-</script>
-{% endblock script %}
+
