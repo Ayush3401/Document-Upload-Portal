@@ -1,0 +1,207 @@
+<!-- @format -->
+
+{% extends 'base1.html' %} 
+{% block head %}
+<meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+  <link rel="stylesheet" href="/resources/demos/style.css">
+  <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+  <script>
+  $( function() {
+    $( "#sharename" ).autocomplete({
+      source: '{% url 'view_files' pk %}'
+    });
+  } );
+  </script>
+  <style>
+ 
+  
+
+    .nav {
+      background-color: rgb(173, 230, 181);
+      list-style-type: none;
+      text-align: center;
+      margin: 0;
+      padding:-3;
+    }
+  
+    .nav li {
+      display: inline-block;
+      font-size: 15px;
+      padding: 5px;
+    }
+    
+     div.alll {
+       text-align: left;
+        padding:10px;
+      
+     }
+     .foff{
+       color: black;
+     }
+     .foff:hover{
+       color: black;
+     }
+   
+     .nav-item{
+       padding:0 6px;
+       color:white;
+     }
+   
+     body{
+        /* background-image: linear-gradient( to right   rgb(154, 157, 158),rgb(211, 188, 188),rgb(240, 241, 238));*/   
+         background-image: url(https://images.pexels.com/photos/129731/pexels-photo-129731.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500);   
+         background-repeat:no-repeat;
+         background-size:cover;
+     }
+     .nav {
+       background-color:greenyellow;
+       list-style-type: none;
+       color:black;
+       text-align: center;
+       margin: 0;
+       padding:-3;
+     }
+   
+     .nav li {
+       display: inline-block;
+       font-size: 15px;
+       padding: 5px;
+     }
+     .navbar-custom{
+       background-color: #1b1717;
+     }
+     .btn-info:not(:disabled):not(.disabled).active, .btn-info:not(:disabled):not(.disabled):active, .show > .btn-info.dropdown-toggle{
+       background-color: burlywood;
+     }
+     .grid-container {
+    display: grid;
+    grid-template-columns: auto auto auto auto auto;
+    /* background-color:purple ; */
+    /* opacity: 0.2; */
+    padding: 10px;
+  }
+  .grid-item {
+    background-color: rgba(255, 255, 255, 0.3);
+    border: 1px solid rgba(0, 0, 0, 1);
+    padding: 20px;
+    font-size: 17px;
+    text-align: center;
+  }
+   
+  </style>
+  
+
+{% endblock head%} 
+{% block body %}
+
+<form method="post">
+    {% csrf_token %}
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js">
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js">
+    </script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js">
+    </script>
+    
+    
+    
+    
+  <nav class="navbar navbar-expand-sm navbar-custom">
+     <div class="dropdown show">
+       <a class="btn-two btn-info btn dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+         INFO
+       </a>
+     
+       <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+        <!-- <div style="padding-left:45px;padding-right:40px;"><input type="text" placeholder="share to other users" name="sharename" id="sharename" style="padding-left:50px;"/></div> -->
+        <!-- <button class="btn " type="submit" name="share" title="Share" style="padding-left:50px"> -->
+          <!-- <i class="material-icons" style="font-size:50px;color:blue;padding-left:60px">share</i> -->
+      <!-- </button> -->
+  
+      <!-- <div style="padding-left:45px"><input type="text" placeholder="move to other folders" name="sharename" id="sharename" style="padding-left:50px;"/></div> -->
+        <!-- <button class="btn " type="submit" name="move" title="Move" style="padding-left:50px"> -->
+          <!-- <i class="material-icons" style="font-size:50px;color:blue;padding-left:60px;">drive_file_move</i> -->
+      <!-- </button> -->
+      <!-- <button class="btn " type="submit" name="delete" title="Delete" style="padding-left:50px"> -->
+        <!-- <i class="material-icons" style="font-size:50px;color:blue;padding-left:60px;">delete</i> -->
+    <!-- </button><br> -->
+    
+  
+        
+         <!-- <a href="/home/{{folder.id}}/upload" class="foff" title="Upload File" style="padding-left:50px"><i class="material-icons" style="font-size:50px;color:blue;padding-left:60px">file_upload</i></a> -->
+  <!--  -->
+  <div style="padding-left:45px;padding-right:40px;" class="ui-widget"><input type="text" placeholder="share to other users" name="sharename" id="sharename" style="padding-left:50px;"/></div>
+        <button class="btn" type="submit"  name="share" title="Share" style="padding-left:50px">
+          <i class="material-icons" style="font-size:50px;color:blue;padding-left:60px">share</i>
+      </button>
+   <div style="padding-left:45px;padding-right:40px;" class="ui-widget">
+     <input type="text" name="movename" placeholder="move to other folders" style="padding-left:50px;" />
+  </div>
+        <button class="btn " type="submit" name="move" title="Move" style="padding-left:50px">
+          <i class="material-icons" style="font-size:50px;color:blue;padding-left:60px;">drive_file_move</i>
+      </button>   
+       <button class="btn " type="submit" name="delete" title="Delete" style="padding-left:50px">
+        <i class="material-icons" style="font-size:50px;color:blue;padding-left:60px;">delete</i>
+    </button><br>
+     <a href="/home/{{folder.id}}/upload" class="foff" title="Upload File" style="padding-left:50px"><i class="material-icons" style="font-size:50px;color:blue;padding-left:60px">file_upload</i></a>
+  
+    
+      
+  
+<!-- <input class="btn " type="submit" value="Share" name="share"/> -->
+<!-- <div class="ui-widget"> -->
+<!-- <input type="text" name="movename"/ > -->
+<!-- </div> -->
+<!-- <input class="btn btn-primary" type="submit" value="Move" name="move"> -->
+<!-- <a href="/home/{{folder.id}}/upload">upload file</a> -->
+
+       </div>
+     </div>
+    
+      <ul class="navbar-nav ml-auto">
+        <li class="nav-item">
+    
+          {{request.user.username}}</p>
+    
+        </li>
+        <li>
+           <p style="color:burlywood">|</p>
+          </li>
+        
+
+        <li class="nav-item logout">
+    
+          <a href={% url 'logout' %}>Logout</a>
+        </li>
+    
+      </ul>
+    </nav>
+     
+  <div class="grid-container">
+    {% for file in files %}
+    <div class="grid-item">
+    <div class="alll">
+      <!-- <input type="checkbox" value={{file.name}} name={{file.id}}><a href={{file.file.url}} download>{{file.name}}</a><br> -->
+      <!-- <a href={% url 'renamefile' file.id %}>Rename</a> -->
+  
+      <a href= {{file.file.url}} ><i title={{file.name}} class="material-icons" style="font-size:40px;color:blue;">insert_drive_files</i></a></br>
+      <input type="checkbox" value={{file.name}} name={{file.id}}>
+      <span style="color:black"> {{file.name}} </span>
+     
+      <a href={% url 'renamefile' file.id %}>Rename</a>
+  </div>
+  </div>
+      {% endfor %}
+      </div>
+      </form>
+   
+{% endblock body %}
+{% block script %}
+<script>
+    $('form').addclass('')
+</script>
+{% endblock script %}
