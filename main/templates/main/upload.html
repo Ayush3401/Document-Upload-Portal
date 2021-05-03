@@ -1,0 +1,104 @@
+<!-- @format -->
+
+{% extends 'base1.html' %} {% block head %}
+<title>Upload File</title> 
+<style>
+  div.alll {
+    text-align: left;
+     padding:10px;
+  }
+  .foff{
+    color: black;
+  }
+  .foff:hover{
+    color: black;
+  }
+
+  .nav-item{
+    padding:0 6px;
+    color:white;
+  }
+
+  body{
+     /* background-image: linear-gradient( to right   rgb(154, 157, 158),rgb(211, 188, 188),rgb(240, 241, 238));*/   
+     /* background-image: linear-gradient(to right, white,rgb(219, 161, 219),orange,rgb(90, 128, 0),violet); */  
+  }
+
+  .nav {
+    background-color:greenyellow;
+    list-style-type: none;
+    color:black;
+    text-align: center;
+    margin: 0;
+    padding:-3;
+  }
+
+  .nav li {
+    display: inline-block;
+    font-size: 15px;
+    padding: 5px;
+  }
+  .navbar-custom{
+    background-color: #1b1717;
+  }
+  .btn-info:not(:disabled):not(.disabled).active, .btn-info:not(:disabled):not(.disabled):active, .show > .btn-info.dropdown-toggle{
+    background-color: burlywood;
+  }
+  .chk{
+                    background-color: lightgrey;
+                    
+                    position: absolute;
+                    width: 500px;
+                   height: 300px;
+                    top: 0;
+                     bottom: 0;
+                  left: 0;
+                right: 0;
+                  padding-left: 60px;
+                  padding-right: 60px;
+                  padding-top:50px;
+                margin: auto;
+     }       
+</style>
+
+{% endblock head%} {% block body %}
+{% load crispy_forms_tags %}
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js">
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js">
+</script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js">
+</script>
+<nav class="navbar navbar-expand-sm navbar-custom">
+<ul class="navbar-nav ml-auto">
+  <li class="nav-item">
+
+    {{request.user.username}}</p>
+
+  </li>
+  <li>
+     <p style="color:burlywood">|</p>
+    </li>
+  
+  <li class="nav-item logout">
+
+    <a href={% url 'logout' %}>Logout</a>
+  </li>
+
+</ul>
+</nav>
+<div class="chk">
+
+<form method="post" class="form" enctype="multipart/form-data">
+  {% csrf_token %} {{ form|crispy}}
+  <input class="btn btn-primary" type="submit" value="Submit" />
+</form>
+
+</div>
+{% endblock body %}
+{% block script %}
+<script>
+    $('form').addclass('')
+</script>
+{% endblock script %}
