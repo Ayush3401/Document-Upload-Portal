@@ -31,15 +31,20 @@
           <a class="nav-link active" href={% url 'home' %}>Home</a>
         </li>
         <li class="nav-item"> 
-        <a href='/home/addFolder/0' class="nav-link active" style="text-decoration:none; color:white;">Add Folder</a>
-        </li>         
-        </li>
+        <a href="/home/addFolder/{{folder.id}}/" class="nav-link active" >Add Folder</a>
+        </li>  
+        <li>
+        <a href="/home/{{folder.id}}/upload" class="nav-link active">Upload file</a>
+       </li>
         <li class="nav-item">
           <a class="nav-link active" href="#" onClick="document.getElementById('delete').click()" >Delete</a>
         </li>
         
         <li class="nav-item">
           <a class="nav-link active" href="#" id="rename_nav"  onClick="rename_function()" >Rename</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link active" href="#" id="move_nav" onClick="move_function()">Move</a>
         </li>
        </ul>
       <form class="d-flex">
@@ -56,22 +61,50 @@
 
 <form method="post">
     {% csrf_token %}
+    <div style="display:grid; grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;">
+    {% for child_folder in folders %}
+    <input type="checkbox" value={{child_folder.id}} name=folder{{child_folder.id}} id=0{{child_folder.id}}><a href={% url 'view_files' child_folder.id %} >{{child_folder.name}}</a>
+    {% endfor %}
+  
     {% for file in files %}
-    <input type="checkbox" value={{file.id}} name={{file.id}}><a href={{file.file.url}} download>{{file.name}}</a><br>
+    <input type="checkbox" value={{file.id}} name=file{{file.id}} id=1{{file.id}}><a href={{file.file.url}} download>{{file.name}}</a><br>
     <a href={% url 'renamefile' file.id %}>Rename</a>
 
     {% endfor %}
-    {% for child_folder in folders %}
-    <input type="checkbox" value={{child_folder.id}} name={{child_folder.id}} ><a href={% url 'view_files' child_folder.id %} >{{child_folder.name}}</a>
-    {% endfor %}
-    <input class="btn btn-primary" type="submit" value="Delete" name="delete"/><br>
+    </div>
+    
+    <input class="btn btn-primary" type="submit" id="delete" value="Delete" name="delete"/><br>
     <div class="ui-widget">
     <input type="text" name="sharename" id="sharename" / >
  </div>
  <input class="btn btn-primary" type="submit" value="Share" name="share"/>
  <input type="text" name="movename"/ >
- <input class="btn btn-primary" type="submit" value="Move" name="move">
+ <input class="btn btn-primary" type="submit" id="move" value="Move" name="move">
 </form>
-<a href="/home/{{folder.id}}/upload">upload file</a>
-<a href="/home/addFolder/{{folder.id}}/">add Folder</a>
+
+<script> 
+ 
+ setInterval(()=>{var val = document.querySelectorAll('input[type="checkbox"]:checked').length;
+  if(val!=1){
+    document.getElementById("rename_nav").style.display = "none";
+    
+  }
+  else{
+    document.getElementById('rename_nav').style.display = '';
+  }
+  }, 100);
+
+    function rename_function(){
+      var id = document.querySelectorAll('input[type="checkbox"]:checked')[0].id;
+      var link = 'http://localhost:8000/' ;
+      if(id[0]=='0'){link+= id.substr(1,id.length) + '/files/newname/'}
+      else{link+='files/'+id.substr(1,id.length)+'/newname/'}
+      window.location.href = link;
+    }
+
+    const move_function=()=>
+    {
+      document.getElementById('move').click();
+    }
+  </script>
 {% endblock body %}
