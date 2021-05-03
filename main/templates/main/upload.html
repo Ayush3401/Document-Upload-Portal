@@ -1,104 +1,101 @@
 <!-- @format -->
 
-{% extends 'base1.html' %} {% block head %}
-<title>Upload File</title> 
+{% extends 'base.html' %} {% block head %}
+<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<title>Signup</title>
 <style>
-  div.alll {
-    text-align: left;
-     padding:10px;
-  }
-  .foff{
-    color: black;
-  }
-  .foff:hover{
-    color: black;
-  }
+    body {
+  margin: 0;
+  padding: 0;
+  background-color:white;
+  height: 100vh;
+}
 
-  .nav-item{
-    padding:0 6px;
-    color:white;
-  }
-
-  body{
-     /* background-image: linear-gradient( to right   rgb(154, 157, 158),rgb(211, 188, 188),rgb(240, 241, 238));*/   
-     /* background-image: linear-gradient(to right, white,rgb(219, 161, 219),orange,rgb(90, 128, 0),violet); */  
-  }
-
-  .nav {
-    background-color:greenyellow;
-    list-style-type: none;
-    color:black;
-    text-align: center;
-    margin: 0;
-    padding:-3;
-  }
-
-  .nav li {
-    display: inline-block;
-    font-size: 15px;
-    padding: 5px;
-  }
-  .navbar-custom{
-    background-color: #1b1717;
-  }
-  .btn-info:not(:disabled):not(.disabled).active, .btn-info:not(:disabled):not(.disabled):active, .show > .btn-info.dropdown-toggle{
-    background-color: burlywood;
-  }
-  .chk{
-                    background-color: lightgrey;
-                    
-                    position: absolute;
-                    width: 500px;
-                   height: 300px;
-                    top: 0;
-                     bottom: 0;
-                  left: 0;
-                right: 0;
-                  padding-left: 60px;
-                  padding-right: 60px;
-                  padding-top:50px;
-                margin: auto;
-     }       
-</style>
-
-{% endblock head%} {% block body %}
-{% load crispy_forms_tags %}
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js">
-</script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js">
-</script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js">
-</script>
-<nav class="navbar navbar-expand-sm navbar-custom">
-<ul class="navbar-nav ml-auto">
-  <li class="nav-item">
-
-    {{request.user.username}}</p>
-
-  </li>
-  <li>
-     <p style="color:burlywood">|</p>
-    </li>
+#login .container #login-row #login-column #login-box {
+  margin-top: 120px;
+  max-width: 400px;
+  height: 215px;
+  border: 1px solid #9C9C9C;
+  background-color:black;
+  color:white;
+  border-radius: 1rem;
+  padding-top:20px;
+  padding-left:5rem;
+  opacity: 0.75;
   
-  <li class="nav-item logout">
+}
+#login .container #login-row #login-column #login-box #login-form {
+  padding-top:20px;
+  padding: 20px;
+}
+#login .container #login-row #login-column #login-box #login-form #register-link {
+  margin-top: -85px;
+}
+  </style>
+<title>Upload File</title> 
+{% endblock head%}
+ {% block body %}
+ <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <div class="container-fluid">
+    <a class="navbar-brand" style="color:white" >DUP</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+      aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="localhost:8000/home">Home</a>
+        </li>
+        <li class="nav-item"> 
+        <!-- <a href='/home/addFolder/0' class="nav-link active" style="text-decoration:none; color:white;">Add Folder</a> -->
+        </li>         
+        </li>
+        <li class="nav-item">
+          <!-- <a class="nav-link active" href="#" onClick="document.getElementById('delete').click()" >Delete</a> -->
+        </li>
+        
+        <!-- <li class="nav-item"> -->
+          <!-- <a class="nav-link active" href="#" id="rename_nav"  onClick="rename_function()" >Rename</a> -->
+        </li>
+       </ul>
+      <form class="d-flex">
+        <!-- <a class=" nav-item nav-link active" href="#"  onClick="document.getElementById('share').click()" style="text-decoration:none;color:white;">Share</a> -->
+      <!-- <input class="form-control" id="sharename_nav"   placeholder="Share" onChange="document.getElementById('sharename').value = this.value"> -->
 
-    <a href={% url 'logout' %}>Logout</a>
-  </li>
-
-</ul>
+        <a class="nav-link active" href="#" style="text-decoration:none; color:white;">{{request.user.username}}</a>
+      
+        <button class="btn "><a href={% url 'logout' %} style="text-decoration:none; color:white;">Logout</a></button>
+      </form>
+    </div>
+  </div>
 </nav>
-<div class="chk">
-
-<form method="post" class="form" enctype="multipart/form-data">
-  {% csrf_token %} {{ form|crispy}}
-  <input class="btn btn-primary" type="submit" value="Submit" />
-</form>
-
+<div id="login">
+  
+  <div class="container" style="padding-top:5rem;border-radius:12px;">
+      <div id="login-row" class="row justify-content-center align-items-center">
+          <div id="login-column" class="col-md-6">
+              <div id="login-box" class="col-md-12">
+                  <!-- <form id="login-form" class="form" action="" method="post"> -->
+                    {% load crispy_forms_tags %}
+                    
+                    <form id="login-form" method="post" class="form" enctype="multipart/form-data">
+                      {% csrf_token %} {{ form|crispy}}
+                      <input class="btn btn-primary" type="submit" value="Submit" />
+                    </form>
+                  <!-- </form> -->
+              </div>
+          </div>
+      </div>
+  </div>
 </div>
+
 {% endblock body %}
 {% block script %}
 <script>
     $('form').addclass('')
 </script>
 {% endblock script %}
+
