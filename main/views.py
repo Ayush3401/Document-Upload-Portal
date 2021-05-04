@@ -92,13 +92,22 @@ def file_view(request, folder_id):
 
     if request.method == 'POST':
         if 'delete' in request.POST:
+            print(request.POST)
             for file in files:
-                if(str(file.id) in request.POST):
+                id='file'+str(file.id)
+                if(id in request.POST):
+                    print("HERE")
                     folder.files.remove(file)
+            for child_folder in folders:
+                id='folder'+str(child_folder.id)              
+                if(id in request.POST):
+                    print("FOLDER")
+                    ffr.children.remove(child_folder)
             return redirect('view_files', folder_id=folder_id)
         elif 'share' in request.POST:
             for file in files:
-                if(str(file.id) in request.POST):
+                id='file'+str(file.id)
+                if(id in request.POST):
                     try:
                         user = User.objects.get(
                             username=request.POST.get('sharename'))
@@ -116,18 +125,20 @@ def file_view(request, folder_id):
 
         elif 'move' in request.POST:
             for file in files:
-                if(str(file.id) in request.POST):
+                id='file'+str(file.id)
+                if(id in request.POST):
                     fldr = ufr.folders.get(
                         pk=request.POST.get('movename'))
                     folder.files.remove(file)
                     fldr.files.add(file)
 
-            for folder in folders:
-                if(str(folder.id) in request.POST):
+            for child_folder in folders:
+                id='folder'+str(child_folder.id)
+                if(id in request.POST):
                     fffr = Folder_folder_relation.objects.get(parent=Folder.objects.get(
                         pk=request.POST.get('movename')))
-                    ffr.children.remove(folder)
-                    fffr.children.add(folder)
+                    ffr.children.remove(child_folder)
+                    fffr.children.add(child_folder)
 
         return redirect('view_files', folder_id)
     else:
