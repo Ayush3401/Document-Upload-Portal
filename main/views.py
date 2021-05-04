@@ -32,7 +32,8 @@ def signup(request):
 @login_required(login_url='login')
 def uploadFile(request, folder_id):
     if request.method == 'POST':
-        form = UploadFileForm(request.POST, request.FILES)
+        print(request.FILES)
+        form = UploadFileForm(request.POST,request.FILES)
         if form.is_valid():
 
             file = File.objects.create(
@@ -108,20 +109,28 @@ def file_view(request, folder_id):
             for file in files:
                 id='file'+str(file.id)
                 if(id in request.POST):
-                    try:
                         user = User.objects.get(
                             username=request.POST.get('sharename'))
                         ufr = User_folder_relation.objects.get(user=user)
                         folder_name = 'Shared-' + str(request.user.username)
                         try:
-                            fldr = ufr.folders.get(pk=folder_name)
+                            fldr = ufr.folders.get(name=folder_name)
                             fldr.files.add(file)
                         except:
-                            fldr = Folder.objects.create(pk=folder_name)
+                            fldr = Folder.objects.create(name=folder_name)
+                            fldr.save()
+                            ffffr=Folder_folder_relation.objects.create(parent=fldr)
                             ufr.folders.add(fldr)
                             fldr.files.add(file)
-                    except:
-                        return HttpResponse('User does not exist')
+            
+            for child_folder in folders:
+                id="folder"+str(child_folder.id)
+                if(id in request.POST):
+                        user = User.objects.get(
+                            username=request.POST.get('sharename'))
+                        ufr = User_folder_relation.objects.get(user=user)
+                        ufr.folders.add(child_folder)
+                     
 
         elif 'move' in request.POST:
             for file in files:
@@ -158,7 +167,10 @@ def create_folder(request, folder_id):
     form = folderCreationForm()
     if request.method == 'POST':
         folder = Folder.objects.create(name=request.POST.get('name'))
+        print(request.POST)
         f = Folder_folder_relation.objects.create(parent=folder)
+        folder.save()
+        f.save()
         if(folder_id):
             ffr = Folder_folder_relation.objects.get(
                 parent=Folder.objects.get(pk=folder_id))
@@ -173,22 +185,30 @@ def create_folder(request, folder_id):
 
 
 @login_required(login_url='login')
-def renamefolder(request, folder_id):
+def renamefolder(request,parent_id, folder_id):
     folder = Folder.objects.get(pk=folder_id)
     if request.method == "POST":
         if 'newname' in request.POST:
             folder.name = request.POST.get('newname')
             folder.save()
-            return redirect('home')
+            if(parent_id==0):
+                return redirect('home')
+            else:
+                link ='/'+  str(parent_id) + '/files/'
+                return redirect(link)
     return render(request, 'main/renamefolder.html')
 
 
 @login_required(login_url='login')
-def renamefile(request, file_id):
+def renamefile(request,parent_id, file_id):
     file = File.objects.get(pk=file_id)
     if request.method == "POST":
         if 'newname' in request.POST:
             file.name = request.POST.get('newname')
             file.save()
-            return redirect('home')
+            if(parent_id == 0):
+                return redirect('home')
+            else:
+                link ='/'+ str(parent_id) + '/files/'
+                return redirect(link)
     return render(request, 'main/renamefile.html')

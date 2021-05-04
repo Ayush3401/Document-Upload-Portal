@@ -10,8 +10,8 @@
   <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
   <script>
   $( function() {
-    $( "#sharename" ).autocomplete({
-      source: '{% url 'view_files' pk %}'
+    $( "#sharename_nav" ).autocomplete({
+      source: '{% url 'view_files' pk %}' 
     });
   } );
   </script>
@@ -37,20 +37,25 @@
         <a href="/home/{{folder.id}}/upload" class="nav-link active">Upload file</a>
        </li>
         <li class="nav-item">
-          <a class="nav-link active" href="#" onClick="document.getElementById('delete').click()" >Delete</a>
+          <a class="nav-link active" href="#" id="rename_nav"  onClick="rename_function()" >Rename</a>
+       
         </li>
         
         <li class="nav-item">
-          <a class="nav-link active" href="#" id="rename_nav"  onClick="rename_function()" >Rename</a>
+          <a class="nav-link active" href="#" id="delete_nav" onClick="document.getElementById('delete').click()" >Delete</a>
+       
         </li>
         <li class="nav-item">
-          <a class="nav-link active" href="#" id="move_nav" onClick="move_function()">Move</a>
+          <a class="nav-link active" href="#" id="move_nav" onClick="move_function()" >Move</a>
+        </li>
+        <li >
+          <input class="form-control mr-sm-2" id="move_nav_search"   placeholder="Enter Folder ID here." onChange="document.getElementById('movename').value = this.value">
+       
         </li>
        </ul>
       <form class="d-flex">
-        <a class=" nav-item nav-link active" href="#"  onClick="document.getElementById('share').click()" style="text-decoration:none;color:white;">Share</a>
-      <input class="form-control" id="sharename_nav"   placeholder="Share" onChange="document.getElementById('sharename').value = this.value">
-
+        <a class=" nav-item nav-link active" id="share_nav" href="#"  onClick="document.getElementById('share').click()" style="text-decoration:none;color:white;">Share</a>
+        <input class="form-control" id="sharename_nav"   placeholder="Share" onChange="document.getElementById('sharename').value = this.value">
         <a class="nav-link active" href="#" style="text-decoration:none; color:white;">{{request.user.username}}</a>
       
         <button class="btn "><a href={% url 'logout' %} style="text-decoration:none; color:white;">Logout</a></button>
@@ -58,52 +63,100 @@
     </div>
   </div>
 </nav>
+<p style="margin-left:1%;font-weight: bold;">To select one or more items please click on the checkbox.</p>
+<p style="margin-left:1%;font-weight: bold;">Current Folder's ID: {{folder.id}}</p>
+
 
 <form method="post">
     {% csrf_token %}
     <div style="display:grid; grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;">
     {% for child_folder in folders %}
-    <input type="checkbox" value={{child_folder.id}} name=folder{{child_folder.id}} id=0{{child_folder.id}}><a href={% url 'view_files' child_folder.id %} >{{child_folder.name}}</a>
-    {% endfor %}
+    
+  <div style="display:flex;flex-direction: column;margin:10%;overflow:auto;">
+
+  <a href={% url 'view_files' child_folder.id %} style="text-decoration: none;">
+  <img src="https://upload.wikimedia.org/wikipedia/commons/5/59/OneDrive_Folder_Icon.svg" style="width:5rem; height:5rem;" >
+  </img>
+  </a>
+  
+  <div style="display:flex;flex-direction: row;margin:5%;">
+  <input type="checkbox"  name=folder{{child_folder.id}} style="margin-top:5%;margin-right:5%; margin-left:0%;" value = {{child_folder.id}} id=0{{child_folder.id}} />
+  <a href={% url 'view_files' folder.id %} style="text-decoration: none;">
+  {{child_folder.name}}
+  </a>
+  </div>
+  </div>
+  {% endfor %}
   
     {% for file in files %}
-    <input type="checkbox" value={{file.id}} name=file{{file.id}} id=1{{file.id}}><a href={{file.file.url}} download>{{file.name}}</a><br>
-    <a href={% url 'renamefile' file.id %}>Rename</a>
+    <div style="display:flex;flex-direction: column;margin:10%;overflow:auto;">
+        <a href={{file.file.url}} download style="text-decoration: none;">
+        <img src="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wCEAAkGBxANEBANDRAQDw4PEA8PDQ0PDxUQDxAQFREWFxURFRUYHyggGBslHRYWITEiJikrLi46Fx8zODMsNygtLisBCgoKDg0OGhAQGy0mHyUtLy0tLS0vNi0tLS0tNystLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLf/AABEIAOEA4QMBIgACEQEDEQH/xAAbAAEBAAMBAQEAAAAAAAAAAAAABgEDBQQHAv/EAEEQAAIBAQMDEQcCBgMBAAAAAAABAgMEBhEFUpISExUWITEzNEFRU2Fxc5Gy0RQycoKxwcIioUKBg5Ph8CMkQ6P/xAAbAQEAAwEBAQEAAAAAAAAAAAAABAUGAQMCB//EADwRAAECAgIOCAQHAQAAAAAAAAEAAgMEBREVMTM0QVFScYGRobHB0QYSFBYhU2FyE5Lh8DJCgqKy0uJi/9oADAMBAAIRAxEAPwD7iAAiAGGERnEyjeCFLGNNa5NcuP6U+3lPDl/K7k3QpPCK3Kk1/E+ZdRwTNUlTJY4w4FvC7lg06laykgHDrxNA5r32jLVep/6OC5ofpXjv/ued22q9+rU05ep5wZ581Gca3PcTnKtWwmNFTQNS2+01M+emx7RUz56TNQPP4z8o619dRuJbfaKmfPSY9onnz0magPjPyjrT4bcS2+01M+enIz7VPPnps0gfGflHWnUGJbfaZ589P/J+vaqufPTl6mgD4z8o606gxL0RttVPFVJpre/Wzr5NvFJNRtH6o9Il+pdqW+cAEiBPR4DusxxzE1g6F5xZeHEFThzX0SlUjNKUWnFrFNPcaNpDZJyrKzvD3qb96H36mWVltEasVOD1UXvP7PrNlIUhDm2eHg4WxxGMblQTMq6AfG1gP3hW8AFgoyAAIgACIAAiAAIgACIc3Lds1ik5LcnL9MO18v8AJYnRZK3sqvXIU+RQ1X85PD7ECk5gwJZzxbtDOeVtSZSEIkUNNq2dC4RgHUu9Y1Wrfq3YU1q2ud47i/3mMNLwDGiNhNtk1fe9aKJEENhe7AvRkvIDqJTrNwi91QW+1zvmOzDIVnX/AJ49blJ/c6eBk3ECi5WC2rqAnG4AnbazBZ2LNxYhrrq9B4Ln7D2foo+L9TOxNn6KPiz3gk9mg5DdQ5Ly+NEyjrK8OxVn6KHgNirP0UPA9wO9mg5DdQ5J8aJlHWV4dibP0UPAzsVZ+ih4HtA7PByG6hyT40TKOsrxbFWfoYeB5rXkOhUi1GChLklHc3evnOsYZ8ulIDhUWNqzDkgjRAa+sda+d1qbhKUJbjjjF9qNZ78urC01e1PxR4D8/jsEOK5gwEjUalp4buswOxgFD35KylKzyxW7B+/DkfWuZngB8wor4Tw9hqIXXsD2lrrRX0Gy2mFWCnB4xf8AuD5meghMlZSlZpYrdg/fhz9nWWdltEasVODxi/8AcH1m4o+kWTbMThbHEem5Z2alXQXYxgPP1XoABZKKgACIAAiAAIgACLDJG9vDx7uPmkVzJK9vDx7uPmkU9O3oc44qfR120FcUo7nrhv6f5E4Ulz96t/S/IzlDX7D0/wASrSfvd2jeFSAA3aziAAIgACIAAiAAIoe8PGavbT8iOcdO8fGanyeSJzD87nb5i+528rUy9ybmG4IACKvVD3ZKylKzSxW7B+/Dn611nhB6wor4Tw9hqIXy9jXtLXWl9CstojVipweMX/uD6zeQmScpSs08Vuwfvw+66y0s9eNWKnF4xlvP7G4o6kGTbMThbHEem7fnZqWMF3obR5reACxUVAAEQABEAARYZJXt4ePdx80itZJXt4ePdx80inp29DnCn0ddtBXEZS3P3q3bT/ImykufvVu2n+RnqFv1n6v4lWc/e7tG8KkABuVnUAARAAEQABEAARRN5F/2anZDyo5h1rzr/nfXGD/Y5J+e0gKpqKP+jvWnlrizMNyAAhr3QABEOjkfKbs0t3dpSf6o83Wus5wPWDGfBeHsNRC+IkNsRpa60volOopJSi8YtYpreaNpMXYyg0/Z57zxdPq5XH7lMjfSU02ZhCI3SMRwhZqPBMF5YfsLIAJa8UAARAAEWGSV7eHj3cfNIrWSV7eHj3cfNIp6dvQ5wp9HXbQVxSkuf7tbth+RNMproe7W7YfRmeoW/Wfq3FWdIXB2jeFRgA3KzqAAIgACIAAiAAIuVlfJStKTT1NSO5GWG41zM4ju3X56b+Z+hYAr5ii5aO/rvHj6GqvOpUGciwm9Vp8PVRu12vzQ0zG120ZsdNFmCLYGU/61/Re1ko3p96VF7XrRmrTR+XkC09GtOPqWwOWAlcbtY5JZKLiG3mvnNWnKDcZpxkt9NYM/JW3oop0XPBaqDjhLlwbwaJIzVISfZI3w66xVWPrqVtKx/jM61VWBezIrwtFL4kvFYF2iDyNxij8cS8Roejt7v93AKspS6NzcSsgAv1WIAAiAAIsMkr28PHu4+aRWskr28PHu4+aRT07ehzhT6Ou2griMproe7W7YfRkyymuh7tXth9GZ6hL9ZmduKs6QuB0b1RmDJzcuWt0KMpx97FKL5m+XwxNrFithML3WgK9Sz7Gl7g0WyvTO2U4PCU4RfM5pP9zHt9HpqX9yPqQLeLbe63vt77BmT0jfX4QxrPJW4otuFxV7shR6Wn/cQ2Qo9NT00QIPnvFF8sayvqxcPKKvdkaHS09NDZGh0tPTRBgd4ovljWVyxcPKOxXmyNDpaemhsjQ6WnpogwO8UXyxrKWLh5R2K92Qo9NT00NkKPS0/wC4iBA7xRfLGsrti4eUVf8At9HpqX9yIVupPcVWm+ypH1IAyO8cTyxrPJcsWzKK+j4mSeurbJTjOnJ46jBxb30nyFCaSVmWzEIRW4VVRoRhPLDgXKvHxefbDzoi0Wl4+Lz7YedEWjK9IL6b7Bvcrii7ifcdzV7MjcYo/HEvEQeRuMUfjiXiLLo7cH+7gFFpS6NzcVkAGgVYgACIAAiwySvbw8e7j5pFaySvbw8e7j5pFPTt6HOFPo67aCuIymuh7tXth9GTLKa6Hu1e2H0ZnqEv1mZ24qzpC4HRvVGeHKtj9opSp7z3HFvkkt49wNtEhtiNLHWj4FZ9ri1wcLYXz6tY6tNuM6bTXa1/J8pr1qWa/wBz6IZM+ejsOvwiHVXxCsxSjsLdq+c63LNfgzGofM/Bn0cHO7jfN/b/AKXbKnI2/RfONbfM/Aa2+Z+B9HA7uN8w/L/pLKHI2/RfONbfM/Aa2+Z+B9HA7uN8w/L/AKSyhyNv0XzjW3zPwM63LNfgz6MB3cb5p+X/AEllTkbfovnOtyzX4M/cbNN7ijN9kWfQwO7jPMOr6oaVORtXFu7k6VCMp1FhOeH6c2K3k+s7QBfS8BkCGIbLQVZEiOiOLnWyuXeLi9T5POiLLS8PFqnyeeJFmT6QX032De5XVGXE+47gvXkbjFH44l4iDyNxij8cS8RZdHbg/wB3AKLSl0bm4rIANAqxAAEQABFhkle3h493HzSK1kle3h493HzSKenb0OcKfR120FcRlNdD3avbD6MmWU10Pdq9sPozPUJfrMztxVnSFwOjeqMA8tutSoU5VJbqW8udveRt3vaxpc41ALPAEmoW16gQ9bLlom29XqFyRikkvua9lrR00/Eo3dIZcHwa46uasRRkTCQrwEFsraOmnpDZW0dNPSPnvFAyHbOa7Yt+UNqvQQWyto6aekNlbR009Id4oGQ7ZzSxb8obVeggtlbR009IbK2jpp6Q7xQMh2zmli35Q2q9BBrK1o6afifunlm0ReOuN4cjwaZ9DpDL1/hds5rhouJgI28lcg8eTLYq9NVFuN7ko8zW+j2F3De17Q5to+IVc5paajbQAH2uLl3i4tU+TzoikWt4uLVPk86IpGO6Q3032De5XtF3E+7gF7MjcYo/HEvEQeRuMUfjiXiLHo7cH+7gFFpS6NzcVkAGgVYgACIAAiwySvbw8e7j5pFaySvbw8e7j5pFPTt6HOFPo67aCuIymuh7tXth9GTLKa6Hu1u2H0ZnqEv1mZ24qzpC4HRvVGcq8VCVShJRWLi1LDnS3/2OqYwNpHhCLDdDdaIqVBDeWODhgXzgwW9bItnm3KVPde/hJxXgngatr9mzXpsyZ6PzIPg5tWcjgd6uhSkLCD96VGgstr9mzXpMbX7Pmy02c7vzWNus/wBV2ycHEdnNRpksdr9nzZabGwFmzZabHd+axt1n+qWTg4js5qOBY7AWbNlpsbAWbMenL1Hd+axs1n+q5ZODiOzmo0FnsBZsx6cvU/dPIlmi01SWK3sZSa8Gzo6PzNf4m6z/AFSykLEdnNars0HCgnLc1UnNJ82CS+h2DCWBk1cvBEGE2GMAqVLFeYjy84UAB7L4XMvBxar8vnRFFreDi1X5fPEijHdIb6b7Bvcr2i7ic53BevI3GKPxxLxEHkbjFH44l4ix6O3B/u4BRaUujc3FZABoFWIAAiAAIsMkr28PHu4+aRWskr28PHu4+aRT07ehzhT6Ou2griMproe7W7YfRk0Utz96t2w/Iz1C36z9X8SrOkLg7RvCowDXOainKTSSWLb3kjcrOrYCdtF54ptU6bmly6rU4/ywZq20voV/c/wVjqZkmmov1AnbVUVLEjHIr6u0KnBL7aX0K036DbTLolpv0PmzUlln5Xcl3sExk7RzVQCX20y6JaT9Btpl0S0n6Czclln5Xck7BMZO0c1UAl9tMuiWk/QbaJdEtN+gs3JZZ+V3JOwTGTtHNVAJbbVLoVpv0M7aX0K036CzUll/tdyTsExk7RzVQCY20vof/p/g/Ub051HBdVTF/Q6Kakj+f9ruSdgj5O0c1Sg81jtUK0VOm8U/FPmfWeksmuDgC01hRCCDUVzLwcWq/L54kUWt4OLVfl88SKMh0hvpvsG9yvKLuJzngvXkbjFH44l4iDyNxij8cS8RY9Hbg/3cAotKXRubisgA0CrEAARAAEWGSV7eHj3cfNIrWSV7eHj3cfNIp6dvQ5wp9HXbQVxSkuf7tbth+RNMpbn71btp/kZ2hb9Z+r+JVnP3u7RvCpDkXnk1Z5anlcVL4cfXA65qr0Y1IuEljGSwaNnMwjFgvhg1VgjWqCE/qPa44DWvnZk79a7MtU9bnHU8mrxT/ngfjaxVz6fjL0MSaJnAavhk6ua0InYB/MFwzB3drFXPp+MvQbWKufT8ZehyxM75Z2c13tkDKC4QO7tYq59Pxl6DaxVz6fjL0FiZ3yzs5p22BlhcIHd2sVc+n4y9BtYq59Pxl6CxU75Z2c07bAywuEZO5tYq59Pxl6DaxVz6fjL0FiZ3yzs5p22BlhcMwd3axVz6fjL0Mq7NTHdnTS5WsW8PAWKnfLOzmnbYGWF+7oN41V/DhB9Wq3SoPFk+xRs8NRDtlJ78nzntNjR8u6Xl2w3WxxJNWhUMzFEWKXi0uZeDi1X5fPEii0vFxap8nnRFIzfSG+m+wb3K2ou4nOdwXsyNxij8cS8RB5G4xR+OJeIsejtwf7uAUWlLo3NxWQAaBViAAIgACLDJK9vDx7uPmkVrJG9vDx7uPmkU9O3oc44qfR120FcYpLn71b+n+RNMpLnvhv6f5mdoa/Yen+JVpP3u7RvCpQAbpZxAAEQABEAARAAEQABEAARAAEXLvFxep8nnRFItLxv/AK8+2HnRFoxvSC+m+wb3K+oy4n3Hc1ezI3GKPxxLxEHkbjFH44l4iy6O3B/u4BRKUujc3ErIANAqxAAEQABFhkneyDVWM+SUMF2xbx+qK05F4rJrtFtbsoPVLs/i/b6FfSkAx5VzW2x4jR47q9KlScQQ4zSbVrWo07F2LUqdZwluKosF2rdX3OQYTMRLRzAititwGv7zrQRoQiMLDhX0jEyTmS7wRwUK+5JbiqJbj7eZnaha6UljGpBrqkjey85BmG9aG7RhGhZuLAiQjU4cl6QadehnR0kZ16GdHSRJ6wxrxqK2g1a7HOjpIa7HOjpIVpUVtBq12OdHSQ12OdHSQrRbQatdjnR0kNdjnR0kK0W0GrXY50dJDXY50dJCtKitoNWvQzo6SMa9DOjpIdYY0qK3A0StNNb84L50cy35epU01TeuT5FH3V2v0PGNMwoLetEcAPvBhXoyE95qaCVovXaUowop7snqpLqW9+/0Jc2WivKrJzm8ZS339l1Gsws/N9qjmJaFoZh91rRysH4MMMw4V7shxbtFJLnx/kliy6RM3UsnvV3vYaiH5P6LxKc1FBQTDlesfzGvR4DbVWqekYgdGqGAVIAC5UBAAEQABEMMyAijcvZLdGTqQX/FJ8n8DfJ2cxyD6LUgpJxkk01g095onco3c35Wdru2/K/UylI0K/rGJLisG23CM2MelsK4lJ8dXqRdfNTgN1oslSluVISj1tbniaTOvYWmpwqOI/VWzTWKws4mAZPipvovrxQwDJypvonisAyBU3EE8VgGQKm4gnisAyBU30TxWMQDJ2pvonisGTGJ+6dOU3hCOqfMk2/2PprQTU236LhNXiV+D15NsE7RPUR3Et2c+SK9ToWC7tSeDq/8cebfm/simstlhRioU1qUvFvnb5WXtH0LEikOjDqtxYTyHqdCrZqfYwdWH4nYPvEv1Z6EaUYwgsIxWCNwBsAABUFRW/EoADqIAAiAAIgACLDMIA4bS6sS3mT1p3wCFP2gvWFaWoAFevRAAEQABEAARAAEQABFts++d+z7wBNkra84v4StgQBYYF4m2sgA6iAAIgACL//Z" style="width:5rem; height:5rem;" >
+        </img>
+        </a>
+        
+    <div style="display:flex;flex-direction: row;margin:5%;">
+    <input type="checkbox" value={{file.id}} name=file{{file.id}} style="margin-top:5%;margin-right:5%; margin-left:0%;" id=1{{file.id}} />
+    <a href={{file.file.url}} style="text-decoration: none;" >{{file.name}}</a>
+    </div>
+    </div>
 
     {% endfor %}
-    </div>
     
-    <input class="btn btn-primary" type="submit" id="delete" value="Delete" name="delete"/><br>
+    <input class="btn btn-primary" type="submit" id="delete" value="Delete" name="delete" style="display: none;"/>
     <div class="ui-widget">
-    <input type="text" name="sharename" id="sharename" / >
+    <input type="text" name="sharename" id="sharename" style="display: none;"/ >
  </div>
- <input class="btn btn-primary" type="submit" value="Share" name="share"/>
- <input type="text" name="movename"/ >
- <input class="btn btn-primary" type="submit" id="move" value="Move" name="move">
+ <input class="btn btn-primary" type="submit" value="Share" id="share" name="share" style="display: none;"/>
+ <input type="text" id="movename" name="movename" style="display: none;"/ >
+ <input class="btn btn-primary" type="submit" id="move" value="Move" name="move" style="display: none;">
 </form>
 
 <script> 
  
  setInterval(()=>{var val = document.querySelectorAll('input[type="checkbox"]:checked').length;
+  if(val!=0)
+  {
+    document.getElementById("move_nav").style.display='';
+    document.getElementById("move_nav_search").style.display='';
+    document.getElementById("delete_nav").style.display='';
+    document.getElementById("share_nav").style.display='';
+    document.getElementById("sharename_nav").style.display='';
+  
+    
+  }
+  else
+  {
+    document.getElementById("delete_nav").style.display="none";
+    document.getElementById("move_nav").style.display="none";
+    document.getElementById("move_nav_search").style.display="none";
+    document.getElementById("share_nav").style.display='none';
+    document.getElementById("sharename_nav").style.display='none';
+  
+    
+  }
   if(val!=1){
     document.getElementById("rename_nav").style.display = "none";
-    
   }
   else{
     document.getElementById('rename_nav').style.display = '';
   }
   }, 100);
 
-    function rename_function(){
+  function rename_function(){
       var id = document.querySelectorAll('input[type="checkbox"]:checked')[0].id;
-      var link = 'http://localhost:8000/' ;
+      var folder = window.location.href
+      var i1 = folder.indexOf("/files/")
+      var i2 = folder.indexOf(':8000/')
+      i2+=6;
+      var link = 'http://localhost:8000/'+folder.substr(i2,i1-i2) + '/' ;
       if(id[0]=='0'){link+= id.substr(1,id.length) + '/files/newname/'}
       else{link+='files/'+id.substr(1,id.length)+'/newname/'}
       window.location.href = link;
     }
 
     const move_function=()=>
-    {
+    { 
       document.getElementById('move').click();
     }
   </script>

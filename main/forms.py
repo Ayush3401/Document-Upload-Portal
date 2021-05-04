@@ -15,7 +15,7 @@ class usercreationform(UserCreationForm):
 class UploadFileForm(forms.ModelForm):
     class Meta:
         model = File
-        fields = [ 'file']
+        fields = ['file']
 
 
 class folderCreationForm(forms.ModelForm):
