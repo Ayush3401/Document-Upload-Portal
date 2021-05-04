@@ -21,7 +21,8 @@ urlpatterns = [
     path('home/addFolder/<int:folder_id>/',
          views.create_folder, name='addFolder'),
     path('<int:folder_id>/files/', views.file_view, name='view_files'),
-    path('<int:folder_id>/files/newname/',
+    path('<int:parent_id>/<int:folder_id>/files/newname/',
          views.renamefolder, name='renamefolder'),
-    path('files/<int:file_id>/newname/', views.renamefile, name='renamefile'),
+    path('<int:parent_id>/files/<int:file_id>/newname/',
+         views.renamefile, name='renamefile'),
 ]+static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

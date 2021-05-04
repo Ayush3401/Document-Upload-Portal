@@ -33,15 +33,17 @@
         </li>         
         </li>
         <li class="nav-item">
-          <a class="nav-link active" href="#" onClick="document.getElementById('delete').click()" >Delete</a>
+       
+          <a class="nav-link active" href="#" id="rename_nav"  onClick="rename_function()" >Rename</a>
+        
         </li>
         
         <li class="nav-item">
-          <a class="nav-link active" href="#" id="rename_nav"  onClick="rename_function()" >Rename</a>
+          <a class="nav-link active" href="#" id="delete_nav" onClick="document.getElementById('delete').click()" >Delete</a>
         </li>
        </ul>
       <form class="d-flex">
-        <a class=" nav-item nav-link active" href="#"  onClick="document.getElementById('share').click()" style="text-decoration:none;color:white;">Share</a>
+        <a class=" nav-item nav-link active" href="#"  id="share_nav" onClick="document.getElementById('share').click()" style="text-decoration:none;color:white;">Share</a>
       <input class="form-control" id="sharename_nav"   placeholder="Share" onChange="document.getElementById('sharename').value = this.value">
 
         <a class="nav-link active" href="#" style="text-decoration:none; color:white;">{{request.user.username}}</a>
@@ -82,6 +84,15 @@
 </form>
 </div>
 <script> setInterval(()=>{var val = document.querySelectorAll('input[type="checkbox"]:checked').length;
+if(val==0)
+{ document.getElementById("share_nav").style.display="none";
+  document.getElementById("sharename_nav").style.display="none";  
+  document.getElementById("delete_nav").style.display="none";}
+else
+{ document.getElementById("share_nav").style.display='';
+  document.getElementById("sharename_nav").style.display='';
+  document.getElementById("delete_nav").style.display='';}
+
 if(val!=1){
   document.getElementById("rename_nav").style.display = "none";
   
@@ -92,7 +103,7 @@ else{
 }, 100);
   function rename_function(){
     var id = document.querySelectorAll('input[type="checkbox"]:checked')[0].value;
-    var link = 'http://localhost:8000/' + id + '/files/newname/';
+    var link = 'http://localhost:8000/0/' + id + '/files/newname/';
     window.location.href = link;
   }
 </script>

@@ -1,14 +1,92 @@
 <!-- @format -->
 
-{% extends 'base.html' %} {% block head %}<title>Signup</title> {% endblock head%} {% block body %}
-<a href={% url 'logout' %}>logout</a>
-{% load crispy_forms_tags %}
-<form method="post" class="form">
-  {% csrf_token %} 
-Newname: 
-  <input name="newname" id="newname">
-  <input class="btn btn-primary" type="submit" value="Submit" />
-</form>
+{% extends 'base.html' %} {% block head %}
+<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<title>Rename Folder</title>
+<style>
+    body {
+  margin: 0;
+  padding: 0;
+  background-color:white;
+  height: 100vh;
+}
+
+#login .container #login-row #login-column #login-box {
+  margin-top: 120px;
+  max-width: 400px;
+  height: 215px;
+  border: 1px solid #9C9C9C;
+  background-color:black;
+  color:white;
+  opacity: 0.75;
+  border-radius: 1rem;
+  padding-top:15px;
+  
+}
+#login .container #login-row #login-column #login-box #login-form {
+  padding-top:20px;
+  padding: 20px;
+}
+#login .container #login-row #login-column #login-box #login-form #register-link {
+  margin-top: -85px;
+}
+  </style>
+ {% endblock head%}
+
+{% block body %}
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <div class="container-fluid">
+    <a class="navbar-brand" style="color:white">DUP</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+      aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item">
+          <a class="nav-link active" href={% url 'home' %}>Home</a>
+        </li>
+       </ul>
+      <form class="d-flex">
+        
+        <a class="nav-link active" href="#" style="text-decoration:none; color:white;">{{request.user.username}}</a>
+      
+        <button class="btn "><a href={% url 'logout' %} style="text-decoration:none; color:white;">Logout</a></button>
+      </form>
+    </div>
+  </div>
+</nav>
+
+<div id="login">
+  
+  <div class="container" style="padding-top:5rem;border-radius:12px;">
+      <div id="login-row" class="row justify-content-center align-items-center">
+          <div id="login-column" class="col-md-6">
+              <div id="login-box" class="col-md-12">
+                {% load crispy_forms_tags %}
+                <form id="login-form" method="post" class="form">
+                  {% csrf_token %}
+                  <div id = "div_id_name" class = "form-group">
+                    <label for = "newname" class = " requiredField">Newname<span class = "asterikField">*</span></label>
+                    <div class>
+                      <input name="newname" maxlength = "255" class = "textinput textInput form-control"  id="newname">
+                    </div>
+                    </div>
+                  <!-- <form id="login-form" class="form" action="" method="post"> -->
+                  
+        
+           
+                      <input class="btn btn-primary" type="submit" value="Rename" />
+                </form>
+                  <!-- </form> -->
+              </div>
+          </div>
+      </div>
+  </div>
+</div>
+
 
 {% endblock body %}
 {% block script %}
