@@ -27,7 +27,7 @@
         left: 0;
         right: 0;
         opacity: 0.75;
-        padding-top: 60px;
+        padding-top: 55px;
         margin: auto;
         border-radius: 2rem;
     }
@@ -68,7 +68,7 @@
     .round3 {
         padding-left: 20px;
         padding-right: 20px;
-        padding-bottom: 15px;
+        padding-top: -15px;
     }
 </style>
 
@@ -77,12 +77,12 @@
 
 {% block body %}
 
-<div style="padding-top:100px; margin-top:110px; color:red;font-size:100px;">
+<div style="padding-top:100px; margin-top:10px; color:blue;font-size:10px;">
     <center>
 
-        <h3>
-
-        </h3>
+        <h1>
+          
+        </h1>
     </center>
 </div>
 
@@ -96,6 +96,7 @@
 
 
     <div class="round3">
+        <h2 style="color:cyan; margin-top:20px">Welcome To The<br>Document-Upload-Portal</h2> 
         <p class="round1"><a href={% url 'login' %}  style="text-decoration:none; color:black;">Login</a></p>
         <p class="round2"><a href={% url 'signup' %} style="text-decoration:none;color:black;">Sign Up</a></p>
     </div>

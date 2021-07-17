@@ -1,0 +1,366 @@
+%-------------------------
+% Resume in Latex
+% Author : Arkadeep Das, Manas Daruka, Ayush Sharma, Abhinav Gupta
+% License : MIT
+%------------------------
+
+%---- Required Packages and Functions ----
+
+\documentclass[a4paper,11pt]{article}
+\usepackage{latexsym}
+\usepackage{xcolor}
+\usepackage{float}
+\usepackage{ragged2e}
+\usepackage[empty]{fullpage}
+\usepackage{wrapfig}
+\usepackage{lipsum}
+\usepackage{tabularx}
+\usepackage{titlesec}
+\usepackage{geometry}
+\usepackage{marvosym}
+\usepackage{verbatim}
+\usepackage{enumitem}
+\usepackage[hidelinks]{hyperref}
+\usepackage{fancyhdr}
+\usepackage{multicol}
+\usepackage{graphicx}
+\usepackage{cfr-lm}
+\usepackage[T1]{fontenc}
+\setlength{\multicolsep}{0pt} 
+\pagestyle{fancy}
+\fancyhf{} % clear all header and footer fields
+\fancyfoot{}
+\renewcommand{\headrulewidth}{0pt}
+\renewcommand{\footrulewidth}{0pt}
+\geometry{left=1.4cm, top=0.8cm, right=1.2cm, bottom=1cm}
+% Adjust margins
+%\addtolength{\oddsidemargin}{-0.5in}
+%\addtolength{\evensidemargin}{-0.5in}
+%\addtolength{\textwidth}{1in}
+\usepackage[most]{tcolorbox}
+\tcbset{
+	frame code={}
+	center title,
+	left=0pt,
+	right=0pt,
+	top=0pt,
+	bottom=0pt,
+	colback=gray!20,
+	colframe=white,
+	width=\dimexpr\textwidth\relax,
+	enlarge left by=-2mm,
+	boxsep=4pt,
+	arc=0pt,outer arc=0pt,
+}
+
+\urlstyle{same}
+
+\raggedright
+\setlength{\tabcolsep}{0in}
+
+% Sections formatting
+\titleformat{\section}{
+  \vspace{-4pt}\scshape\raggedright\large
+}{}{0em}{}[\color{black}\titlerule \vspace{-7pt}]
+
+%-------------------------
+% Custom commands
+\newcommand{\resumeItem}[2]{
+  \item{
+    \textbf{#1}{:\hspace{0.5mm}#2 \vspace{-0.5mm}}
+  }
+}
+
+\newcommand{\resumePOR}[3]{
+\vspace{0.5mm}\item
+    \begin{tabular*}{0.97\textwidth}[t]{l@{\extracolsep{\fill}}r}
+        \textbf{#1},\hspace{0.3mm}#2 & \textit{\small{#3}} 
+    \end{tabular*}
+    \vspace{-2mm}
+}
+
+\newcommand{\resumeSubheading}[4]{
+\vspace{0.5mm}\item
+    \begin{tabular*}{0.98\textwidth}[t]{l@{\extracolsep{\fill}}r}
+        \textbf{#1} & \textit{\footnotesize{#4}} \\
+        \textit{\footnotesize{#3}} &  \footnotesize{#2}\\
+    \end{tabular*}
+    \vspace{-2.4mm}
+}
+
+\newcommand{\resumeProject}[4]{
+\vspace{0.5mm}\item
+    \begin{tabular*}{0.98\textwidth}[t]{l@{\extracolsep{\fill}}r}
+        \textbf{#1} & \textit{\footnotesize{#3}} \\
+        \footnotesize{\textit{#2}} & \footnotesize{#4}
+    \end{tabular*}
+    \vspace{-2.4mm}
+}
+
+\newcommand{\resumeSubItem}[2]{\resumeItem{#1}{#2}\vspace{-4pt}}
+
+% \renewcommand{\labelitemii}{$\circ$}
+\renewcommand{\labelitemi}{$\vcenter{\hbox{\tiny$\bullet$}}$}
+
+\newcommand{\resumeSubHeadingListStart}{\begin{itemize}[leftmargin=*,labelsep=0mm]}
+\newcommand{\resumeHeadingSkillStart}{\begin{itemize}[leftmargin=*,itemsep=1.7mm, rightmargin=2ex]}
+\newcommand{\resumeItemListStart}{\begin{justify}\begin{itemize}[leftmargin=3ex, rightmargin=2ex, noitemsep,labelsep=1.2mm,itemsep=0mm]\small}
+
+\newcommand{\resumeSubHeadingListEnd}{\end{itemize}\vspace{2mm}}
+\newcommand{\resumeHeadingSkillEnd}{\end{itemize}\vspace{-2mm}}
+\newcommand{\resumeItemListEnd}{\end{itemize}\end{justify}\vspace{-2mm}}
+\newcommand{\cvsection}[1]{%
+\vspace{2mm}
+\begin{tcolorbox}
+    \textbf{\large #1}
+\end{tcolorbox}
+    \vspace{-4mm}
+}
+
+\newcolumntype{L}{>{\raggedright\arraybackslash}X}%
+\newcolumntype{R}{>{\raggedleft\arraybackslash}X}%
+\newcolumntype{C}{>{\centering\arraybackslash}X}%
+%---- End of Packages and Functions ------
+
+%-------------------------------------------
+%%%%%%  CV STARTS HERE  %%%%%%%%%%%
+%%%%%% DEFINE ELEMENTS HERE %%%%%%%
+% \newcommand{\name}{Dilendra Uikey} % Your Name
+% \newcommand{\course}{B.Tech - Computer Science and Engineering} % Your Course
+% \newcommand{\roll}{190101034} % Your Roll No.
+% \newcommand{\phone}{7987381941} % Your Phone Number
+% \newcommand{\emaila}{duikey@iitg.ac.in} %Email 1
+% % \newcommand{\emailb}{somethingelse@example.com} %Email 2
+% % \newcommand{\github}{github.com/dilendrauikey8} %Github
+% % \newcommand{\website}{https://example.com} %Website
+% \newcommand{\linkedin}{linkedin.com/in/dilendra-uikey-579635190} %linkedin
+
+
+
+
+\begin{document}
+\fontfamily{cmr}\selectfont
+%----------HEADING-----------------
+\parbox{2.35cm}{%
+
+\includegraphics[width=2cm,clip]{iitg_logo.jpg}
+
+}\parbox{\dimexpr\linewidth-2.8cm\relax}{
+\begin{tabularx}{\linewidth}{L r}
+  \textbf{\LARGE Dilendra Uikey}  & +91-7987381941\\
+  {Roll No.:190101034} & \href{mailto:duikey@iitg.ac.in}{duikey@iitg.ac.in} \\
+  Computer Science and Engineering & \href{https://github.com/\github}{github.com/dilendrauikey8}  \\
+%   {Minor in Computer Science and Engineering} &  \href{https://github.com/\github}{Github} $|$ \href{\website}{Website}\\
+  {Indian Institute Of Technology, Guwahati} & \href{https://www.linkedin.com/in/\linkedin/}{linkedin.com/in/dilendra-uikey-579635190}
+\end{tabularx}
+}
+
+
+
+%-----------EDUCATION-----------------
+% \section{Education}
+%   \resumeSubHeadingListStart
+%     \resumeSubheading
+%       {Indian Institute of Technology Guwahati}{Guwahati, India}
+%       {Bachelor of Technology in Mathematics and Computing ;  GPA: 8.10}{July. 2015 -- July. 2019 (Expected)}
+%     \resumeSubheading
+%       {Burdwan Model School}{Burdwan, W.B}
+%       {Central Board of Secondary Education (Class XII);  Percentage: 96.60}{March. 2015}
+%   \resumeSubHeadingListEnd\vspace{-3mm}
+\section{Education}
+\setlength{\tabcolsep}{5pt} % Default value: 6pt
+% \renewcommand{\arraystretch}{1.1} % Default value: 1
+\small{\begin{tabularx}
+{\dimexpr\textwidth-3mm\relax}{|c|C|c|c|}
+  \hline
+  \textbf{Degree/Certificate } & \textbf{Institute/Board} & \textbf{CGPA/Percentage} & \textbf{Year}\\
+  \hline
+  B.Tech. & Indian Institute of Technology, Guwahati & 7.66 (Current) & 2019-Present\\
+  \hline
+%   B.Tech. Minor & Indian Institute of Technology, Guwahati & 0.0 (Current) & 2017-Present\\ %Optional
+%   \hline
+  Senior Secondary & CBSE Board & 86.8\% & 2018 \\
+  \hline
+  Secondary & CBSE Board & 10.00\% & 2016 \\
+  \hline
+\end{tabularx}}
+\vspace{-2mm}
+
+%-----------EXPERIENCE-----------------
+% \section{Experience}
+%   \resumeSubHeadingListStart
+
+%     \resumeSubheading
+%       {XYZ Company Name}{Location}
+%       {XXXXXXXXXXX \& YYYYYYYYYYYY Intern}{May 2019 - Jul. 2019}
+%       \resumeItemListStart
+%     \item {Work Done List 1}
+%     \item {Work Done List 2}
+%     % \item {More work done } .....
+%     \resumeItemListEnd
+    
+%     % \resumeSubheading
+%     %   {Company A}{Bengaluru, India}
+%     %   {API Developer \& Machine Learning Intern}{May. 2018 - Jul. 2018}
+%     %   \resumeItemListStart
+%     % \item {XXXXXXXXXXXXXXX}
+%     %     \item {YYYYYYYYYYYYYYYYYY}
+%     % \resumeItemListEnd
+      
+%   \resumeSubHeadingListEnd
+% \vspace{-5.5mm}
+%-----------PROJECTS-----------------
+\section{Projects}
+\resumeSubHeadingListStart
+    
+    \resumeProject
+      {Document Upload Portal} %Project Name
+      {CSEA,IIT Guwahati} %Project Name, Location Name
+      {Dec. 2020 - april-2021} %Event Dates
+      {\href{Link to github}{https://github.com/Ayush3401/Document-Upload-Portal}} %Website
+      
+      \resumeItemListStart
+     
+        
+        \item Developed an \textbf{Django} based web application using html,css,javaScript.
+        \item {This is a file sharing platform where one user can upload and share the files with other users. The person needs to register themselves by making an account. The person can then use it for \textbf{storing, sharing and working together on multiple files}.}
+       
+    \resumeItemListEnd
+    
+    \resumeProject
+      {Portfolio App} %Project Name
+      {Personal Project} %Project Name, Location Name
+      {june 2021} %Event Dates
+      {\href{Link to github}{github.com/dilendrauikey8}} %Website
+      \resumeItemListStart
+
+        
+        \item Developed an \textbf{front-end project} based on \textbf{react}.
+        \item This is web form of our resume/cv where every thing ordered sequentially.
+        
+    \resumeItemListEnd
+    
+    % \resumeProject
+    %   {Project Name 2}
+    %   {6th Inter IIT TechMeet, IIT Madras}{Dec. 2017 - Jan. 2018}{\href{Links to Reports}{Reports}}
+    %   \resumeItemListStart
+    % \item {Work DOne 1}
+    %     \item {Work Done 2}
+    % \resumeItemListEnd
+      
+  \resumeSubHeadingListEnd
+\vspace{-5.5mm}
+
+
+\section{Technical Skills}
+ \resumeHeadingSkillStart
+  \resumeSubItem{Programming} % Category
+    {C/C++, Python*}
+  \resumeSubItem{Web Technologies}{Django, HTML, CSS,Nodejs*,
+Javascript*}
+ \resumeSubItem{Database management:}
+ {MySQL, MongoDb*}
+ \resumeSubItem{Operating System:}
+ {Windows,Linux*}
+%  \resumeSubItem{Tools/Frameworks} % Category
+%     {Keras, Tensorflow, Pytorch*, ROS, OpenCV}
+%  \resumeSubItem{Operating Systems}
+%  {Windows, Linux*} 
+\hfill \textit{\footnotesize{* Elementary proficiency}} \hspace{3mm}
+ \resumeHeadingSkillEnd
+
+\section{Key courses taken}
+\vspace{-5pt}
+ \begin{multicols}{2}
+ \begin{itemize}[leftmargin = *,itemsep=-3pt]
+
+\item Data Structure and Algorithms(+Lab)
+\item Computer Architecture and Organisation
+
+\item Database Management System(+Lab)
+% \item Algorithms Design 
+\item Discrete Mathematics
+\item System Software Lab
+\item Formal Languages and Automata Theory
+%%%%%%%%%%%%%%%%%%
+% \item Financial Engineering
+% \item Probability Theory and Random Processes 
+% \item Portfolio Theory and Performance Analysis
+% \item Probability Theory and Random Processes
+%  \item Monte Carlo Simulation
+% \item Statistical Analysis of Financial Data 
+% \item Financial Engineering
+% \item Portfolio Theory and Performance Analysis 
+ %\item Optimization
+%%%%%%%%%%%%%%%%%%%%%%
+% \item Discrete Mathematics
+% \item Matrix Computations 
+
+ 
+%\item Formal Language \& Automata Theory
+%\item Theory of Computation
+
+% \item Stochastic Calculus
+% \item Matrix Computations
+
+% \item Scientific Computing
+
+%\item Linear Algebra
+% \item Data Structures and Algorithms (with Lab)
+% \item Discrete Mathematics
+% \item Probability Theory and Random Processes
+% \item Stochastic Calculus for Finance
+% \item Computer Networks (with Lab)
+% \item Operating Systems (with Lab) 
+% \item Statistical Analysis of Financial Data
+% \item CNNs for Visual Recognition (Stanford)*
+ \end{itemize}
+ 
+ \end{multicols}
+\vspace{-5pt}
+\section{Achievements}
+\resumeSubHeadingListStart
+\resumeSubItem{  Joint Entrance Examination - Main 2019}{Cleared Jee Mains with competing 0.94+ million candidates.}
+\resumeSubItem{  Joint Entrance Examination - Adv 2019}{Cleared Jee Advanced with competing 0.16+ million candidates.}
+
+\resumeSubItem{  The Japan Science and Technology Agency (JST) 2016}{ Got selected for \textbf{SAKURA} Science exchange program in high school.This program invites outstanding young students and young professionals from Asian countries on \textbf{short-term visits to Japan}.}
+\resumeSubItem{  National Talent Search Examination (NTSE-MP)  2015-16}{ cleared NTSE First stage .}
+
+\resumeSubHeadingListEnd
+\vspace{-15pt}
+\section{Programming}
+\resumeSubHeadingListStart
+ \resumeSubheading{CODECHEF}{\href{https://www.codechef.com/users/rajauikey}{\textit{\small codechef.com/users/rajauikey}}}{}{}
+ 
+{\vspace{-15pt}
+\begin{itemize}
+    \item Maximum Rating 1800+ (4 star)
+    \item \textbf{March Cook-Off 2021 Division 3:} Got 75 rank out of 6700+ valid participants .
+\end{itemize} }
+\vspace{-10pt}
+\resumeSubheading{CODEFORCES}{\href{https://codeforces.com/profile/dilendrauikey82178}{\textit{\small codeforces.com/profile/dilendrauikey82178}}}{}{}
+ 
+{\vspace{-10pt}
+\begin{itemize}
+    \item Maximum Rating 1464 (specialist)
+    \item \textbf{Codeforces Round #724 (Div. 2): }Got 1836 rank out of 10000+ valid participants.
+\end{itemize} }
+
+{\vspace{-10pt}
+
+
+
+
+\section{Extra Curricular Activities ans position of Responsibility}
+\resumeSubHeadingListStart
+    \item{
+      Participated in \textbf{Manthan(Inter hostel cultural meet)} group dance performance
+     }
+    \item{
+       NCC(National Cadet Corps) CDT RANK HOLDER 2016.
+     }
+ \resumeSubHeadingListEnd
+
+
+%-------------------------------------------
+\end{document}
